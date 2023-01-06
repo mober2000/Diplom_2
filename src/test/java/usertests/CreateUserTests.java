@@ -4,9 +4,9 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
-import useractions.GetUpdateAndDeleteUser;
-import usercreate.CreateUser;
-import usercreate.CreateUserData;
+import user.useractions.GetUpdateAndDeleteUser;
+import user.usercreate.CreateUser;
+import user.usercreate.CreateUserData;
 import universalclasses.RandomGenerator;
 
 

@@ -1,4 +1,4 @@
-package usercreate;
+package user.usercreate;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;

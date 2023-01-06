@@ -1,4 +1,4 @@
-package useractions;
+package user.useractions;
 
 public class UserData{
     private String email;

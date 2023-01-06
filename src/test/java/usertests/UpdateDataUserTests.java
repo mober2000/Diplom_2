@@ -1,16 +1,16 @@
 package usertests;
 
 import universalclasses.RandomGenerator;
-import useractions.GetUpdateAndDeleteUser;
+import user.useractions.GetUpdateAndDeleteUser;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
-import loginuser.LoginUser;
-import loginuser.LoginUserData;
+import user.loginuser.LoginUser;
+import user.loginuser.LoginUserData;
 import org.junit.Test;
-import useractions.UserData;
-import usercreate.CreateUser;
-import usercreate.CreateUserData;
+import user.useractions.UserData;
+import user.usercreate.CreateUser;
+import user.usercreate.CreateUserData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -77,5 +77,7 @@ public class UpdateDataUserTests {
         ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserKey(bearerToken);
         deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
+
+
 
 }

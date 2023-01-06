@@ -1,12 +1,14 @@
-package loginuser;
+package user.usercreate;
 
-public class LoginUserData {
+public class CreateUserData {
     private String email;
     private String password;
+    private String name;
 
-    public LoginUserData(String email, String password) {
+    public CreateUserData(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
     public String getEmail() {
@@ -23,5 +25,13 @@ public class LoginUserData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
