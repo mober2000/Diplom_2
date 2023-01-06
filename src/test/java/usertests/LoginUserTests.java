@@ -1,3 +1,6 @@
+package usertests;
+
+import universalclasses.RandomGenerator;
 import useractions.GetUpdateAndDeleteUser;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;

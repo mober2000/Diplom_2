@@ -1,3 +1,6 @@
+package usertests;
+
+import universalclasses.RandomGenerator;
 import useractions.GetUpdateAndDeleteUser;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -51,9 +54,13 @@ public class UpdateDataUserTests {
         deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
 
+
+
+    //Необходимо узнать должен ли изменяться клиент или нет если мы не авторизовались?
+
     @Test
     @DisplayName("Patch Data Not Authorization  User")
-    @Description("Проверка на внесение изменений в данные авторизованного пользователя")
+    @Description("Проверка на внесение изменений в данные неавторизованного пользователя")
     public void patchDataNotAuthorizationUserTest() {
         ValidatableResponse createUserRequest = createUser.createUser(new CreateUserData(emailYandex, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
@@ -62,16 +69,13 @@ public class UpdateDataUserTests {
         assertEquals(emailYandex, mailResponse);
         assertEquals(name, nameResponse);
 
-        String bearerToken = createUserRequest.extract().path("accessToken");
-        ValidatableResponse patchUserDataRequest = getUpdateAndDeleteUser.patchDataUser(new UserData("ya23" + emailYandex,"Man " + name), bearerToken);
-        patchUserDataRequest.statusCode(200).assertThat().body("success", equalTo(true));
-        String mailPatchResponse = patchUserDataRequest.extract().path("user.email");
-        String namePatchResponse = patchUserDataRequest.extract().path("user.name");
-        assertEquals("ya23" + emailYandex, mailPatchResponse);
-        assertEquals("Man " + name, namePatchResponse);
 
-//        ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserNotKey();
-//        deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
+        ValidatableResponse patchUserDataRequest = getUpdateAndDeleteUser.patchDataUserNotKey(new UserData("ya23" + emailYandex,"Man " + name));
+        patchUserDataRequest.statusCode(401).assertThat().body("success", equalTo(false));
+
+        String bearerToken = createUserRequest.extract().path("accessToken");
+        ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserKey(bearerToken);
+        deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
 
 }

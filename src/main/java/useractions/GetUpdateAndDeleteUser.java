@@ -29,11 +29,20 @@ public class GetUpdateAndDeleteUser extends RestClient{
                 .then().log().all();
     }
 
-    @Step("Внесение изменений в данные пользователя")
+    @Step("Внесение изменений в данные авторизованного пользователя")
     public ValidatableResponse patchDataUser(UserData userData, String bearer) {
         return reqSpec
                 .body(userData)
                 .header("Authorization", bearer)
+                .when()
+                .patch("auth/user")
+                .then().log().all();
+    }
+
+    @Step("Внесение изменений в данные неавторизованного пользователя")
+    public ValidatableResponse patchDataUserNotKey(UserData userData) {
+        return reqSpec
+                .body(userData)
                 .when()
                 .patch("auth/user")
                 .then().log().all();

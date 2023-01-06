@@ -1,10 +1,14 @@
-import useractions.GetUpdateAndDeleteUser;
-import io.restassured.response.ValidatableResponse;
-import org.junit.Test;
-import usercreate.CreateUser;
-import usercreate.CreateUserData;
+package usertests;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.ValidatableResponse;
+import org.junit.Test;
+import useractions.GetUpdateAndDeleteUser;
+import usercreate.CreateUser;
+import usercreate.CreateUserData;
+import universalclasses.RandomGenerator;
+
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
