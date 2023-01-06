@@ -1,9 +1,9 @@
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
-import user.CreateUser;
-import user.CreateUserData;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import user.CreateUser;
+import user.CreateUserData;
 import user.RandomGenerator;
 
 import static org.hamcrest.CoreMatchers.equalTo;
