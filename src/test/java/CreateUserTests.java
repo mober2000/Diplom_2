@@ -59,7 +59,5 @@ public class CreateUserTests {
         createUserNullFieldNameRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
     }
 
-    //надо для создания пол реквеста
-
-
+    //проверяем работу пул реквеста
 }
