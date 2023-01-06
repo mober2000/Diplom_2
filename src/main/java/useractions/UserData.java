@@ -1,13 +1,11 @@
-package user;
+package useractions;
 
-public class CreateUserData {
+public class UserData{
     private String email;
-    private String password;
     private String name;
 
-    public CreateUserData(String email, String password, String name) {
+    public UserData(String email,  String name) {
         this.email = email;
-        this.password = password;
         this.name = name;
     }
 
@@ -19,14 +17,6 @@ public class CreateUserData {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getName() {
         return name;
     }
@@ -34,4 +24,6 @@ public class CreateUserData {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
