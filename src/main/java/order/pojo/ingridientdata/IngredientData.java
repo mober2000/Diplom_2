@@ -1,4 +1,4 @@
-package order.ingridientdata;
+package order.pojo.ingridientdata;
 
 import java.util.List;
 

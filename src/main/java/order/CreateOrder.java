@@ -2,13 +2,8 @@ package order;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import order.ingridientdata.IngredientData;
-import order.ingridientdata.Ingridient;
-import user.loginuser.LoginUserData;
-
-import java.util.List;
-
-import static io.restassured.RestAssured.given;
+import order.pojo.ingridientdata.IngredientData;
+import order.pojo.ingridientdata.Ingridient;
 
 public class CreateOrder extends RestClient{
 
@@ -21,11 +16,21 @@ public class CreateOrder extends RestClient{
     }
 
     @Step("Создаем заказ")
-    public ValidatableResponse createOrder(Ingridient ingridient) {
+    public ValidatableResponse createOrder(Ingridient ingridient, String bearerToken) {
         return reqSpec
+                    .header("Authorization", bearerToken)
                     .body(ingridient)
                     .when()
                     .post("orders")
                     .then().log().all();
+    }
+
+    @Step("Получем информацию о заказах конкретного пользователя")
+    public ValidatableResponse getCreatedOrders() {
+        return reqSpec
+//                .header("Authorization", bearerToken)
+                .when()
+                .get("orders")
+                .then().log().all();
     }
 }

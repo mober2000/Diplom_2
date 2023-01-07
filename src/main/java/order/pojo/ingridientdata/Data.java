@@ -1,4 +1,4 @@
-package order.ingridientdata;
+package order.pojo.ingridientdata;
 
 public class Data {
     private String _id;
