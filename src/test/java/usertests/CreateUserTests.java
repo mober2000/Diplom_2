@@ -50,8 +50,8 @@ public class CreateUserTests {
 
         ValidatableResponse createUserAgainRequest = createUser.createUser(new CreateUserData(emailYandex, password, name));
         createUserAgainRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("User already exists"));
-
         String bearerToken = createUserRequest.extract().path("accessToken");
+
         ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserKey(bearerToken);
         deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
@@ -62,6 +62,7 @@ public class CreateUserTests {
     public void createUserNullFieldsTest(){
         ValidatableResponse createUserNullFieldEmailRequest = createUser.createUser(new CreateUserData("", password, name));
         createUserNullFieldEmailRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
+
         ValidatableResponse createUserNullFieldPasswordRequest = createUser.createUser(new CreateUserData(emailYandex, "", name));
         createUserNullFieldPasswordRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
 

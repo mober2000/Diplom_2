@@ -48,13 +48,12 @@ public class GetUpdateAndDeleteUser extends RestClient{
                 .then().log().all();
     }
 
-//    @Step("Внесение изменений в данные пользователя")
-//    public ValidatableResponse updateToken(String bearer) {
-//        return reqSpec
-//                .body(userData)
-//                .header("Authorization", bearer)
-//                .when()
-//                .patch("auth/user")
-//                .then().log().all();
-//    }
+    @Step("Выход из системы")
+    public ValidatableResponse exitOnSystem(RefreshToken refreshToken) {
+        return reqSpec
+                .body(refreshToken)
+                .when()
+                .post("auth/logout")
+                .then().log().all();
+    }
 }
