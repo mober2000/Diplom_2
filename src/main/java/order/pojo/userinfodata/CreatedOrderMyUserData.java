@@ -1,8 +1,12 @@
 package order.pojo.userinfodata;
 
+import java.util.List;
+
 public class CreatedOrderMyUserData {
     private boolean success;
-    private Orders orders;
+
+
+    private List<Orders> orders;
     private int total;
     private int totalToday;
 
@@ -22,11 +26,11 @@ public class CreatedOrderMyUserData {
         this.totalToday = totalToday;
     }
 
-    public Orders getOrders() {
+    public List<Orders> getOrders() {
         return orders;
     }
 
-    public void setOrders(Orders orders) {
+    public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
 

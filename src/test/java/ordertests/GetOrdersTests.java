@@ -5,6 +5,7 @@ import order.CreateOrder;
 import order.pojo.createdorderdata.CreatedOrderData;
 import order.pojo.ingridientdata.IngredientData;
 import order.pojo.ingridientdata.Ingridient;
+import order.pojo.userinfodata.CreatedOrderMyUserData;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
 import user.loginuser.LoginUser;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 public class GetOrdersTests {
@@ -54,9 +56,30 @@ public class GetOrdersTests {
         CreatedOrderData getOrderDataRequest = createOrderRequest.extract().as(CreatedOrderData.class);
 
         String idOrder = getOrderDataRequest.getOrder().get_id();
+        String statusOrder = getOrderDataRequest.getOrder().getStatus();
+        String nameOrder = getOrderDataRequest.getOrder().getName();
+        String createdAtOrder = getOrderDataRequest.getOrder().getCreatedAt();
+        String updatedAtOrder = getOrderDataRequest.getOrder().getUpdatedAt();
+        int numberOrder = getOrderDataRequest.getOrder().getNumber();
 
         ValidatableResponse getUserOrdersRequest = createOrder.getCreatedOrders();
-        getUserOrdersRequest.statusCode(200).assertThat().body("success", equalTo(true));
+        getUserOrdersRequest.statusCode(200).assertThat().body("success", equalTo(true))
+                .and().body("total", notNullValue());
+        CreatedOrderMyUserData getOrderUserDataRequest = getUserOrdersRequest.extract().as(CreatedOrderMyUserData.class);
 
+        assertEquals(idOrder, getOrderUserDataRequest.getOrders().get(0).get_id());
+        assertEquals(hashIngredients, getOrderUserDataRequest.getOrders().get(0).getIngredients());
+        assertEquals(statusOrder, getOrderUserDataRequest.getOrders().get(0).getStatus());
+        assertEquals(nameOrder, getOrderUserDataRequest.getOrders().get(0).getName());
+        assertEquals(createdAtOrder, getOrderUserDataRequest.getOrders().get(0).getCreatedAt());
+        assertEquals(updatedAtOrder, getOrderUserDataRequest.getOrders().get(0).getUpdatedAt());
+        assertEquals(numberOrder, getOrderUserDataRequest.getOrders().get(0).getNumber());
     }
+
+    @Test
+    public void getOrderListUnauthorizedUser() {
+        ValidatableResponse getUserOrdersRequest = createOrder.getCreatedOrders();
+        getUserOrdersRequest.statusCode(401).assertThat().body("success", equalTo(false)).and().body("message", equalTo("You should be authorised"));
+    }
+
 }

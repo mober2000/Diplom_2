@@ -3,29 +3,19 @@ package order.pojo.userinfodata;
 import java.util.List;
 
 public class Orders {
-    private List<Ingredients> ingredients;
+    private List<String> ingredients;
     private String _id;
-    private Owner owner;
     private String status;
     private String name;
     private String createdAt;
     private String updatedAt;
     private int number;
-    private int price;
 
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public List<Ingredients> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredients> ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -36,8 +26,6 @@ public class Orders {
     public void set_id(String _id) {
         this._id = _id;
     }
-
-
 
     public String getStatus() {
         return status;
@@ -79,11 +67,4 @@ public class Orders {
         this.number = number;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }
