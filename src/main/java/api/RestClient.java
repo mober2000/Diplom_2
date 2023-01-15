@@ -1,4 +1,4 @@
-package user.useractions;
+package api;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.filter.Filter;

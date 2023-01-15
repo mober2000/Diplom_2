@@ -4,8 +4,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
-import user.useractions.UserActions;
-import user.usercreate.CreateUser;
+import testcasessteps.UserActions;
+import testcasessteps.CreateUser;
 
 public class CreateUserTests {
     RandomGenerator randomGenerator = new RandomGenerator();
