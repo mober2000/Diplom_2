@@ -1,4 +1,4 @@
-package order.pojo.createdorderdata;
+package pojo.createdorderdata;
 
 import java.util.List;
 

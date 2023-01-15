@@ -1,4 +1,4 @@
-package order.pojo.userinfodata;
+package pojo.userinfodata;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package user.useractions;
+package pojo.useractiondata;
 
 public class RefreshToken {
     private String token;

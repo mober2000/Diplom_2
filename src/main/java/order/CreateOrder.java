@@ -2,8 +2,8 @@ package order;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import order.pojo.ingridientdata.IngredientData;
-import order.pojo.ingridientdata.Ingridient;
+import pojo.ingridientdata.IngredientData;
+import pojo.ingridientdata.Ingridient;
 
 public class CreateOrder extends RestClient{
 

@@ -2,58 +2,48 @@ package user.useractions;
 
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
+import pojo.useractiondata.UserData;
 
-public class GetUpdateAndDeleteUser extends RestClient{
+import static org.hamcrest.CoreMatchers.equalTo;
+
+public class UserActions extends RestClient{
     @Step("Удаление пользователя с ключом авторизации")
-    public ValidatableResponse deleteUserKey(String bearer) {
+    public ValidatableResponse deleteUserKeyRequest(String bearer) {
         return reqSpec
                 .header("Authorization", bearer)
                 .when()
                 .delete("auth/user")
-                .then().log().all();
+                .then();
     }
 
     @Step("Удаление пользователя без ключа авторизации")
-    public ValidatableResponse deleteUserNotKey() {
+    public ValidatableResponse deleteUserNotKeyRequest() {
         return reqSpec
                 .delete("auth/user")
-                .then().log().all();
-    }
-
-    @Step("Получение данных о пользователе")
-    public ValidatableResponse getDataUser(String bearer) {
-        return reqSpec
-                .header("Authorization", bearer)
-                .when()
-                .get("auth/user")
-                .then().log().all();
+                .then();
     }
 
     @Step("Внесение изменений в данные авторизованного пользователя")
-    public ValidatableResponse patchDataUser(UserData userData, String bearer) {
+    public ValidatableResponse patchDataUserRequest(UserData userData, String bearer) {
         return reqSpec
                 .body(userData)
                 .header("Authorization", bearer)
                 .when()
                 .patch("auth/user")
-                .then().log().all();
+                .then();
     }
 
     @Step("Внесение изменений в данные неавторизованного пользователя")
-    public ValidatableResponse patchDataUserNotKey(UserData userData) {
+    public ValidatableResponse patchDataUserNotKeyRequest(UserData userData) {
         return reqSpec
                 .body(userData)
                 .when()
                 .patch("auth/user")
-                .then().log().all();
+                .then();
     }
 
-    @Step("Выход из системы")
-    public ValidatableResponse exitOnSystem(RefreshToken refreshToken) {
-        return reqSpec
-                .body(refreshToken)
-                .when()
-                .post("auth/logout")
-                .then().log().all();
+    public void deleteUser(String bearerToken){
+        ValidatableResponse deleteUserRequest = deleteUserKeyRequest(bearerToken);
+        deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
 }

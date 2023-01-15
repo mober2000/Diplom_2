@@ -1,6 +1,6 @@
-package order.pojo.createdorderdata;
+package pojo.ingridientdata;
 
-public class Ingredients {
+public class Data {
     private String _id;
     private String name;
     private String type;

@@ -2,16 +2,16 @@ package ordertests;
 
 import io.restassured.response.ValidatableResponse;
 import order.CreateOrder;
-import order.pojo.createdorderdata.CreatedOrderData;
-import order.pojo.ingridientdata.IngredientData;
-import order.pojo.ingridientdata.Ingridient;
-import order.pojo.userinfodata.CreatedOrderMyUserData;
+import pojo.createdorderdata.CreatedOrderData;
+import pojo.ingridientdata.IngredientData;
+import pojo.ingridientdata.Ingridient;
+import pojo.userinfodata.CreatedOrderMyUserData;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
 import user.loginuser.LoginUser;
-import user.useractions.GetUpdateAndDeleteUser;
+import user.useractions.UserActions;
 import user.usercreate.CreateUser;
-import user.usercreate.CreateUserData;
+import pojo.createuserdata.CreateUserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +24,22 @@ public class GetOrdersTests {
     LoginUser loginUser = new LoginUser();
     CreateOrder createOrder = new CreateOrder();
     CreateUser createUser = new CreateUser();
-    GetUpdateAndDeleteUser getUpdateAndDeleteUser = new GetUpdateAndDeleteUser();
+    UserActions userActions = new UserActions();
     CreatedOrderData createdOrderData;
     List<String> hashIngredients = new ArrayList<>();
     RandomGenerator randomGenerator = new RandomGenerator();
-    private final String emailYandex = randomGenerator.randomEmail() + "@yandex.ru";
-    private final String password = randomGenerator.randomPassword();
-    private final String name = randomGenerator.randomName();
+    String mail = randomGenerator.getEmailYandex();
+    String password = randomGenerator.getPassword();
+    String name = randomGenerator.getName();
 
 
     @Test
     public void getOrderListAuthorizedUser() {
-        ValidatableResponse createUserRequest = createUser.createUser(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserRequest = createUser.createUserResponse(new CreateUserData(mail, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailResponse = createUserRequest.extract().path("user.email");
         String nameResponse = createUserRequest.extract().path("user.name");
-        assertEquals(emailYandex, mailResponse);
+        assertEquals(mail, mailResponse);
         assertEquals(name, nameResponse);
         String bearerTokenResponse = createUserRequest.extract().path("accessToken");
 

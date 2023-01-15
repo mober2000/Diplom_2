@@ -1,14 +1,12 @@
-package user.usercreate;
+package pojo.loginuserdata;
 
-public class CreateUserData {
+public class LoginUserData {
     private String email;
     private String password;
-    private String name;
 
-    public CreateUserData(String email, String password, String name) {
+    public LoginUserData(String email, String password) {
         this.email = email;
         this.password = password;
-        this.name = name;
     }
 
     public String getEmail() {
@@ -25,13 +23,5 @@ public class CreateUserData {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

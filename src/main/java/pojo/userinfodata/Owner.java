@@ -1,4 +1,4 @@
-package order.pojo.userinfodata;
+package pojo.userinfodata;
 
 public class Owner {
     private String name;

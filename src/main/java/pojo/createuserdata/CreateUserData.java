@@ -1,11 +1,13 @@
-package user.useractions;
+package pojo.createuserdata;
 
-public class UserData{
+public class CreateUserData {
     private String email;
+    private String password;
     private String name;
 
-    public UserData(String email,  String name) {
+    public CreateUserData(String email, String password, String name) {
         this.email = email;
+        this.password = password;
         this.name = name;
     }
 
@@ -17,6 +19,14 @@ public class UserData{
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
@@ -24,6 +34,4 @@ public class UserData{
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

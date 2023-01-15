@@ -1,16 +1,16 @@
 package usertests;
 
 import universalclasses.RandomGenerator;
-import user.useractions.GetUpdateAndDeleteUser;
+import user.useractions.UserActions;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import user.loginuser.LoginUser;
-import user.loginuser.LoginUserData;
+import pojo.loginuserdata.LoginUserData;
 import org.junit.Test;
-import user.useractions.UserData;
+import pojo.useractiondata.UserData;
 import user.usercreate.CreateUser;
-import user.usercreate.CreateUserData;
+import pojo.createuserdata.CreateUserData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -19,38 +19,38 @@ public class UpdateDataUserTests {
     RandomGenerator randomGenerator = new RandomGenerator();
     CreateUser createUser = new CreateUser();
     LoginUser loginUser = new LoginUser();
-    GetUpdateAndDeleteUser getUpdateAndDeleteUser = new GetUpdateAndDeleteUser();
-    private final String emailYandex = randomGenerator.randomEmail() + "@yandex.ru";
-    private final String password = randomGenerator.randomPassword();
-    private final String name = randomGenerator.randomName();
+    UserActions userActions = new UserActions();
+    String mail = randomGenerator.getEmailYandex();
+    String password = randomGenerator.getPassword();
+    String name = randomGenerator.getName();
 
     @Test
     @DisplayName("Patch Data Authorization User")
     @Description("Проверка на внесение изменений в данные авторизованного пользователя")
     public void patchDataAuthorizationUserTest() {
-        ValidatableResponse createUserRequest = createUser.createUser(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserRequest = createUser.createUserResponse(new CreateUserData(mail, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailResponse = createUserRequest.extract().path("user.email");
         String nameResponse = createUserRequest.extract().path("user.name");
-        assertEquals(emailYandex, mailResponse);
+        assertEquals(mail, mailResponse);
         assertEquals(name, nameResponse);
 
-        ValidatableResponse loginUserRequest = loginUser.loginUser(new LoginUserData(emailYandex, password));
+        ValidatableResponse loginUserRequest = loginUser.loginUserRequest(new LoginUserData(mail, password));
         loginUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailLoginResponse = loginUserRequest.extract().path("user.email");
         String nameLoginResponse = loginUserRequest.extract().path("user.name");
-        assertEquals(emailYandex, mailLoginResponse);
+        assertEquals(mail, mailLoginResponse);
         assertEquals(name, nameLoginResponse);
 
         String bearerToken = createUserRequest.extract().path("accessToken");
-        ValidatableResponse patchUserDataRequest = getUpdateAndDeleteUser.patchDataUser(new UserData("ya23" + emailYandex,"Man " + name), bearerToken);
+        ValidatableResponse patchUserDataRequest = userActions.patchDataUserRequest(new UserData("ya23" + mail,"Man " + name), bearerToken);
         patchUserDataRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailPatchResponse = patchUserDataRequest.extract().path("user.email");
         String namePatchResponse = patchUserDataRequest.extract().path("user.name");
-        assertEquals("ya23" + emailYandex, mailPatchResponse);
+        assertEquals("ya23" + mail, mailPatchResponse);
         assertEquals("Man " + name, namePatchResponse);
 
-        ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserNotKey();
+        ValidatableResponse deleteUserRequest = userActions.deleteUserNotKeyRequest();
         deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
 
@@ -62,19 +62,19 @@ public class UpdateDataUserTests {
     @DisplayName("Patch Data Not Authorization  User")
     @Description("Проверка на внесение изменений в данные неавторизованного пользователя")
     public void patchDataNotAuthorizationUserTest() {
-        ValidatableResponse createUserRequest = createUser.createUser(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserRequest = createUser.createUserResponse(new CreateUserData(mail, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailResponse = createUserRequest.extract().path("user.email");
         String nameResponse = createUserRequest.extract().path("user.name");
-        assertEquals(emailYandex, mailResponse);
+        assertEquals(mail, mailResponse);
         assertEquals(name, nameResponse);
 
 
-        ValidatableResponse patchUserDataRequest = getUpdateAndDeleteUser.patchDataUserNotKey(new UserData("ya23" + emailYandex,"Man " + name));
+        ValidatableResponse patchUserDataRequest = userActions.patchDataUserNotKeyRequest(new UserData("ya23" + mail,"Man " + name));
         patchUserDataRequest.statusCode(401).assertThat().body("success", equalTo(false));
 
         String bearerToken = createUserRequest.extract().path("accessToken");
-        ValidatableResponse deleteUserRequest = getUpdateAndDeleteUser.deleteUserKey(bearerToken);
+        ValidatableResponse deleteUserRequest = userActions.deleteUserKeyRequest(bearerToken);
         deleteUserRequest.statusCode(202).assertThat().body("success", equalTo(true)).and().body("message", equalTo("User successfully removed"));
     }
 
