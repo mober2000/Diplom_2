@@ -4,8 +4,6 @@ import java.util.List;
 
 public class CreatedOrderMyUserData {
     private boolean success;
-
-
     private List<Orders> orders;
     private int total;
     private int totalToday;

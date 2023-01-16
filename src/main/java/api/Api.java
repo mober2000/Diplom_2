@@ -7,10 +7,9 @@ import pojo.ingridientdata.IngredientData;
 import pojo.ingridientdata.Ingridient;
 import pojo.loginuserdata.LoginUserData;
 
-public class Api extends RestClient{
-
+public class Api extends RestClient {
     @Step("Запрос на регистрацию нового пользователя")
-    public ValidatableResponse createUserResponse(CreateUserData createUserData) {
+    public ValidatableResponse createUserRequest(CreateUserData createUserData) {
         return reqSpec
                 .body(createUserData)
                 .when()
@@ -27,16 +26,16 @@ public class Api extends RestClient{
                 .then();
     }
 
-    @Step("Получаем список ингредиентов и вносим этот список в json")
-    public IngredientData getIngredientList()  {
+    @Step("Запрос на получение списка ингредиентов и вносение тела в json")
+    public IngredientData getIngredientListRequest() {
         return reqSpec
                 .get("ingredients")
                 .body()
                 .as(IngredientData.class);
     }
 
-    @Step("Создаем заказ")
-    public ValidatableResponse createOrder(Ingridient ingridient, String bearerToken) {
+    @Step("Запрос на создание заказа")
+    public ValidatableResponse createOrderRequest(Ingridient ingridient, String bearerToken) {
         return reqSpec
                 .header("Authorization", bearerToken)
                 .body(ingridient)
@@ -45,8 +44,8 @@ public class Api extends RestClient{
                 .then().log().all();
     }
 
-    @Step("Получем информацию о заказах конкретного пользователя")
-    public ValidatableResponse getCreatedOrders() {
+    @Step("Запрос на получение информации о заказах конкретного пользователя")
+    public ValidatableResponse getCreatedOrdersRequest() {
         return reqSpec
                 .when()
                 .get("orders")

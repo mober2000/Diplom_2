@@ -1,10 +1,10 @@
 package pojo.useractiondata;
 
-public class UserData{
+public class UserData {
     private String email;
     private String name;
 
-    public UserData(String email,  String name) {
+    public UserData(String email, String name) {
         this.email = email;
         this.name = name;
     }
@@ -24,6 +24,4 @@ public class UserData{
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

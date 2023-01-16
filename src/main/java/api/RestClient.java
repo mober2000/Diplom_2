@@ -10,7 +10,6 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.with;
 
 public class RestClient {
-
     protected static String BASE_URL = "https://stellarburgers.nomoreparties.site/api/";
     protected Filter req = new RequestLoggingFilter();
     protected Filter res = new ResponseLoggingFilter();

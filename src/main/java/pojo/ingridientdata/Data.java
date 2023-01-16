@@ -109,6 +109,4 @@ public class Data {
     public void set__v(int __v) {
         this.__v = __v;
     }
-
-
 }

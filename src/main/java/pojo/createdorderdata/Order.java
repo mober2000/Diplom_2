@@ -37,8 +37,6 @@ public class Order {
         this._id = _id;
     }
 
-
-
     public String getStatus() {
         return status;
     }

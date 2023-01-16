@@ -24,7 +24,7 @@ public class CreateOrder {
     String idThirdIngredient;
 
     public void addIngredients(){
-        IngredientData getIngredientRequest = api.getIngredientList();
+        IngredientData getIngredientRequest = api.getIngredientListRequest();
         idFirstIngredient = getIngredientRequest.getData().get(0).get_id();
         idSecondIngredient = getIngredientRequest.getData().get(1).get_id();
         idThirdIngredient = getIngredientRequest.getData().get(2).get_id();
@@ -34,7 +34,7 @@ public class CreateOrder {
     }
 
     public void createAuthorizedOrder(String mail, String name, String bearerToken){
-        ValidatableResponse createOrderRequest = api.createOrder(new Ingridient(hashIngredients),bearerToken);
+        ValidatableResponse createOrderRequest = api.createOrderRequest(new Ingridient(hashIngredients),bearerToken);
         createOrderRequest.statusCode(200).assertThat().body("success", equalTo(true));
         CreatedOrderData getOrderDataRequest = createOrderRequest.extract().as(CreatedOrderData.class);
 
@@ -47,7 +47,7 @@ public class CreateOrder {
     }
 
     public void createUnauthorizedOrder(){
-        ValidatableResponse createOrderRequest = api.createOrder(new Ingridient(hashIngredients),"");
+        ValidatableResponse createOrderRequest = api.createOrderRequest(new Ingridient(hashIngredients),"");
         createOrderRequest.statusCode(200).assertThat()
                 .body("success", equalTo(true))
                 .and().body("name", notNullValue())
@@ -57,13 +57,13 @@ public class CreateOrder {
     }
 
     public void createNotIngredient(String bearerToken){
-        ValidatableResponse createOrderRequest = api.createOrder(new Ingridient(hashIngredients), bearerToken);
+        ValidatableResponse createOrderRequest = api.createOrderRequest(new Ingridient(hashIngredients), bearerToken);
         createOrderRequest.statusCode(400).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Ingredient ids must be provided"));
     }
 
     public void notCorrectedHashIngredient(String bearerToken){
         hashIngredients.add("11111111111111111111111111111111");
-        ValidatableResponse createOrderRequest = api.createOrder(new Ingridient(hashIngredients), bearerToken);
+        ValidatableResponse createOrderRequest = api.createOrderRequest(new Ingridient(hashIngredients), bearerToken);
         createOrderRequest.statusCode(500);
     }
 

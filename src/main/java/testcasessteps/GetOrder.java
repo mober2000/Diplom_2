@@ -17,7 +17,7 @@ public class GetOrder {
     Api api= new Api();
 
     public void getOrderListAutorized(List<String> hashIngredients, String bearerToken){
-        ValidatableResponse createOrderRequest = api.createOrder(new Ingridient(hashIngredients),bearerToken);
+        ValidatableResponse createOrderRequest = api.createOrderRequest(new Ingridient(hashIngredients),bearerToken);
         createOrderRequest.statusCode(200).assertThat().body("success", equalTo(true));
         CreatedOrderData getOrderDataRequest = createOrderRequest.extract().as(CreatedOrderData.class);
 
@@ -28,7 +28,7 @@ public class GetOrder {
         String updatedAtOrder = getOrderDataRequest.getOrder().getUpdatedAt();
         int numberOrder = getOrderDataRequest.getOrder().getNumber();
 
-        ValidatableResponse getUserOrdersRequest = api.getCreatedOrders();
+        ValidatableResponse getUserOrdersRequest = api.getCreatedOrdersRequest();
         getUserOrdersRequest.statusCode(200).assertThat().body("success", equalTo(true))
                 .and().body("total", notNullValue());
         CreatedOrderMyUserData getOrderUserDataRequest = getUserOrdersRequest.extract().as(CreatedOrderMyUserData.class);
@@ -43,7 +43,7 @@ public class GetOrder {
     }
 
     public void getOrderListUnautorized(){
-        ValidatableResponse getUserOrdersRequest = api.getCreatedOrders();
+        ValidatableResponse getUserOrdersRequest = api.getCreatedOrdersRequest();
         getUserOrdersRequest.statusCode(401).assertThat().body("success", equalTo(false)).and().body("message", equalTo("You should be authorised"));
     }
 }

@@ -14,7 +14,7 @@ public class CreateUser{
 
     @Step("Проверяем создается ли пользователь в системе, и сравниваем значения полей почты, и имени из тела отвта, со значениями которые мы вписали в запрос")
     public void createCorrectUser(String emailYandex, String password, String name){
-        ValidatableResponse createUserRequest = api.createUserResponse(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserRequest = api.createUserRequest(new CreateUserData(emailYandex, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         String mailResponse = createUserRequest.extract().path("user.email");
         String nameResponse = createUserRequest.extract().path("user.name");
@@ -25,26 +25,26 @@ public class CreateUser{
 
     @Step("Попытка повтрного создания пользователя")
     public void createUserAgain(String emailYandex, String password, String name){
-        ValidatableResponse createUserRequest = api.createUserResponse(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserRequest = api.createUserRequest(new CreateUserData(emailYandex, password, name));
         createUserRequest.statusCode(200).assertThat().body("success", equalTo(true));
         this.bearerTokenCreatedAccount = createUserRequest.extract().path("accessToken");
 
-        ValidatableResponse createUserAgainRequest = api.createUserResponse(new CreateUserData(emailYandex, password, name));
+        ValidatableResponse createUserAgainRequest = api.createUserRequest(new CreateUserData(emailYandex, password, name));
         createUserAgainRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("User already exists"));
     }
 
     @Step("Попытка создания пользователя с одним из пустых полей или со всеми пустыми полями")
     public void createUserNullFields(String emailYandex, String password, String name){
-        ValidatableResponse createUserNullFieldEmailRequest = api.createUserResponse(new CreateUserData("", password, name));
+        ValidatableResponse createUserNullFieldEmailRequest = api.createUserRequest(new CreateUserData("", password, name));
         createUserNullFieldEmailRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
 
-        ValidatableResponse createUserNullFieldPasswordRequest = api.createUserResponse(new CreateUserData(emailYandex, "", name));
+        ValidatableResponse createUserNullFieldPasswordRequest = api.createUserRequest(new CreateUserData(emailYandex, "", name));
         createUserNullFieldPasswordRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
 
-        ValidatableResponse createUserNullFieldNameRequest = api.createUserResponse(new CreateUserData(emailYandex, password, ""));
+        ValidatableResponse createUserNullFieldNameRequest = api.createUserRequest(new CreateUserData(emailYandex, password, ""));
         createUserNullFieldNameRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
 
-        ValidatableResponse createUserNullFieldsRequest = api.createUserResponse(new CreateUserData("", "", ""));
+        ValidatableResponse createUserNullFieldsRequest = api.createUserRequest(new CreateUserData("", "", ""));
         createUserNullFieldsRequest.statusCode(403).assertThat().body("success", equalTo(false)).and().body("message", equalTo("Email, password and name are required fields"));
     }
 
