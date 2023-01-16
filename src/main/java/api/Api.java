@@ -18,7 +18,7 @@ public class Api extends RestClient {
                 .then();
     }
 
-    @Step("Запрос на авторизация пользователя")
+    @Step("Запрос на авторизацию пользователя")
     public ValidatableResponse loginUserRequest(LoginUserData loginUserData) {
         return reqSpec
                 .body(loginUserData)
