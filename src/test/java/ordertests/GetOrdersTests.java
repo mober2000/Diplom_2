@@ -1,5 +1,7 @@
 package ordertests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import testcasessteps.*;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
@@ -10,13 +12,15 @@ public class GetOrdersTests {
     CreateOrder createOrder = new CreateOrder();
     CreateUser createUser = new CreateUser();
     UserActions userActions = new UserActions();
+    GetOrder getOrder = new GetOrder();
     RandomGenerator randomGenerator = new RandomGenerator();
     String mail = randomGenerator.getEmailYandex();
     String password = randomGenerator.getPassword();
     String name = randomGenerator.getName();
-    GetOrder getOrder = new GetOrder();
 
     @Test
+    @DisplayName("Get Order List Authorized User")
+    @Description("Проверка на получение корректного списка заказов авторизованного пользователя")
     public void getOrderListAuthorizedUser() {
         createUser.createCorrectUser(mail, password, name);
         String bearerToken = createUser.getBearerTokenCreatedAccount();
@@ -27,6 +31,8 @@ public class GetOrdersTests {
     }
 
     @Test
+    @DisplayName("Get Order List Unauthorized User")
+    @Description("Проверка на получение списка заказов неавторизованного пользователя")
     public void getOrderListUnauthorizedUser() {
         getOrder.getOrderListUnautorized();
     }

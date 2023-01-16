@@ -1,5 +1,7 @@
 package ordertests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import testcasessteps.CreateOrder;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
@@ -16,7 +18,9 @@ public class CreateOrderTests {
     String name = randomGenerator.getName();
 
     @Test
-    public void createOrderAuthorizedUserWithAnIngredientTest() {
+    @DisplayName("Create Order Authorized User")
+    @Description("Проверка на создание заказа авторизованным пользователем")
+    public void createOrderAuthorizedUserWithAnIngredient() {
         createUser.createCorrectUser(mail, password, name);
         String bearerToken = createUser.getBearerTokenCreatedAccount();
         createOrder.addIngredients();
@@ -25,13 +29,17 @@ public class CreateOrderTests {
     }
 
     @Test
-    public void createOrderUnauthorizedUserWithAnIngredientTest() {
+    @DisplayName("Create Order Unauthorized User")
+    @Description("Проверка на создание заказа неавторизованным пользователем")
+    public void createOrderUnauthorizedUserWithAnIngredient() {
         createOrder.addIngredients();
         createOrder.createUnauthorizedOrder();
     }
 
     @Test
-    public void createOrderAuthorizedUserNotWithAnIngredientTest() {
+    @DisplayName("Create Order Authorized User And Not Ingredient")
+    @Description("Проверка на создание заказа авторизованным пользователем, но без указания ингредиентов")
+    public void createOrderAuthorizedUserNotWithAnIngredient() {
         createUser.createCorrectUser(mail, password, name);
         String bearerToken = createUser.getBearerTokenCreatedAccount();
         createOrder.createNotIngredient(bearerToken);
@@ -39,12 +47,15 @@ public class CreateOrderTests {
     }
 
     @Test
-    public void createOrderUnauthorizedUserNotWithAnIngredientTest() {
+    @DisplayName("Create Order Unauthorized User And Not Ingredient")
+    @Description("Проверка на создание заказа неавторизованным пользователем, но без указания ингредиентов")
+    public void createOrderUnauthorizedUserNotWithAnIngredient() {
         createOrder.createNotIngredient("");
     }
 
-
     @Test
+    @DisplayName("Create Order And Not Corrected Ingredient Hash")
+    @Description("Проверка на создание заказа с ошибкой в значении хэша ингредиента")
     public void createOrderNotCorrectedIngredientHash() {
         createUser.createCorrectUser(mail, password, name);
         String bearerToken = createUser.getBearerTokenCreatedAccount();
