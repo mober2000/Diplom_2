@@ -6,6 +6,7 @@ import pojo.createuserdata.CreateUserData;
 import pojo.ingridientdata.IngredientData;
 import pojo.ingridientdata.Ingridient;
 import pojo.loginuserdata.LoginUserData;
+import pojo.useractiondata.UserData;
 
 public class Api extends RestClient {
     @Step("Запрос на регистрацию нового пользователя")
@@ -50,5 +51,40 @@ public class Api extends RestClient {
                 .when()
                 .get("orders")
                 .then().log().all();
+    }
+
+    @Step("Запрос на удаление пользователя с ключом авторизации")
+    public ValidatableResponse deleteUserKeyRequest(String bearer) {
+        return reqSpec
+                .header("Authorization", bearer)
+                .when()
+                .delete("auth/user")
+                .then();
+    }
+
+    @Step("Запрос на удаление пользователя без ключа авторизации")
+    public ValidatableResponse deleteUserNotKeyRequest() {
+        return reqSpec
+                .delete("auth/user")
+                .then();
+    }
+
+    @Step("Запрос на внесение изменений в данные авторизованного пользователя")
+    public ValidatableResponse patchDataUserRequest(UserData userData, String bearer) {
+        return reqSpec
+                .body(userData)
+                .header("Authorization", bearer)
+                .when()
+                .patch("auth/user")
+                .then();
+    }
+
+    @Step("Запрос на внесение изменений в данные неавторизованного пользователя")
+    public ValidatableResponse patchDataUserNotKeyRequest(UserData userData) {
+        return reqSpec
+                .body(userData)
+                .when()
+                .patch("auth/user")
+                .then();
     }
 }

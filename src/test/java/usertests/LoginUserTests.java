@@ -2,7 +2,7 @@ package usertests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import testcasessteps.LoginUser;
+import testcases.LoginUser;
 import org.junit.Test;
 
 public class LoginUserTests {

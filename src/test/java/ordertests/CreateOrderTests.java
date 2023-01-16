@@ -2,11 +2,11 @@ package ordertests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import testcasessteps.CreateOrder;
+import testcases.CreateOrder;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
-import testcasessteps.UserActions;
-import testcasessteps.CreateUser;
+import testcases.UserActions;
+import testcases.CreateUser;
 
 public class CreateOrderTests {
     CreateOrder createOrder = new CreateOrder();
@@ -23,7 +23,6 @@ public class CreateOrderTests {
     public void createOrderAuthorizedUserWithAnIngredient() {
         createUser.createCorrectUser(mail, password, name);
         String bearerToken = createUser.getBearerTokenCreatedAccount();
-        createOrder.addIngredients();
         createOrder.createAuthorizedOrder(mail, name, bearerToken);
         userActions.deleteUser(bearerToken);
     }

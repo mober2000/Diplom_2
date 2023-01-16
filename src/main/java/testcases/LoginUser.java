@@ -1,4 +1,4 @@
-package testcasessteps;
+package testcases;
 
 import api.Api;
 import api.RestClient;
@@ -7,14 +7,13 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import pojo.loginuserdata.LoginUserData;
 
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
 public class LoginUser extends RestClient {
     Api api = new Api();
 
-    @Step("Авторизации пользователя")
+    @Step("Авторизация пользователя")
     public void loginUser(String mail, String password, String name) {
         ValidatableResponse loginUserRequest = api.loginUserRequest(new LoginUserData(mail, password));
         loginUserRequest.statusCode(200).assertThat().body("success", equalTo(true));

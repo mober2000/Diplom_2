@@ -1,11 +1,11 @@
 package usertests;
 
 import universalclasses.RandomGenerator;
-import testcasessteps.UserActions;
+import testcases.UserActions;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
-import testcasessteps.CreateUser;
+import testcases.CreateUser;
 
 public class UpdateDataUserTests {
     RandomGenerator randomGenerator = new RandomGenerator();

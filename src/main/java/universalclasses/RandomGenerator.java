@@ -30,5 +30,4 @@ public class RandomGenerator {
     public String getName() {
         return name;
     }
-
 }

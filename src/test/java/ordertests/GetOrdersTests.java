@@ -2,7 +2,7 @@ package ordertests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import testcasessteps.*;
+import testcases.*;
 import org.junit.Test;
 import universalclasses.RandomGenerator;
 
@@ -26,7 +26,7 @@ public class GetOrdersTests {
         String bearerToken = createUser.getBearerTokenCreatedAccount();
         createOrder.addIngredients();
         List<String> hashIngredients = createOrder.getHashIngredients();
-        getOrder.getOrderListAutorized(hashIngredients, bearerToken);
+        getOrder.getOrderListAuthorization(hashIngredients, bearerToken);
         userActions.deleteUser(bearerToken);
     }
 
@@ -34,6 +34,6 @@ public class GetOrdersTests {
     @DisplayName("Get Order List Unauthorized User")
     @Description("Проверка на получение списка заказов неавторизованного пользователя")
     public void getOrderListUnauthorizedUser() {
-        getOrder.getOrderListUnautorized();
+        getOrder.getOrderListUnauthorized();
     }
 }
