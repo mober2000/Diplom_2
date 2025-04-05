@@ -15,7 +15,7 @@ public class Api extends RestClient {
     String ORDERS_API = "orders";
     String AUTHORIZATION_USER_API =  "auth/user";
 
-    @Step("Запрос на регистрацию нового пользователя")
+    @Step("Запрос на регистрацию нового пользователя Саня смотри")
     public ValidatableResponse createUserRequest(CreateUserData createUserData) {
         return reqSpec
                 .body(createUserData)
